@@ -1,0 +1,228 @@
+//insertOne
+db.carti.insertOne({
+  _id:1,
+  nume: "Arta manipularii",
+  autor: "Kevin Dutton",
+  editura:"Globo",
+  gen_literar:"Dezvoltare personala",
+  isbn:"978-606-94563-9-2",
+  pret:19.95,
+  an_aparitie: 2019
+});
+
+db.carti.insertOne({
+  _id:2,
+  nume: "Cafeneaua de la capatul lumi",
+  autor: "John P. Strelecky",
+  editura:"Litera",
+  gen_literar:"Dezvoltare personala",
+  isbn:"978-606-33-5047-4",
+  pret:19.95,
+  an_aparitie: 2020
+});
+
+//insert Many
+db.carti.insertMany([
+  {
+     	_id:3,
+  	nume: "Vindecarea copilului interior",
+  	autor: "Stefanie Stah",
+  	editura:"Litera",
+  	gen_literar:"Dezvoltare personala",
+  	isbn:"978-606-33-3835-9",
+  	pret:24.95,
+  	an_aparitie: 2019
+  },
+  {
+     	_id:4,
+  	nume: "Totul se termina cu noi",
+  	autor: "Colleen Hoover",
+  	editura:"Epica",
+	gen_literar:"Dragoste",
+  	isbn:"9786068754574",
+  	pret:21.45,
+  	an_aparitie: 2018
+  },
+  {
+     	_id:5,
+  	nume: "Verity",
+  	autor: "Colleen Hoover",
+  	editura:"Epica",
+	gen_literar:"Fictiune",
+  	isbn:"978-606-8754-78-9",
+  	pret:19.45,
+  	an_aparitie: 2020
+  },
+  {  
+	_id:6,
+  	nume: "Umbrele care ne despart",
+  	autor: "Tricia Levenseller",
+  	editura:"Storia Books",
+	gen_literar: "Fictiune",
+  	isbn:"978-606-9072-29-5",
+  	pret:24.5,
+  	an_aparitie: 2021
+  }, 
+  {
+     	_id:7,
+  	nume: "Amandoi mor la sfarsit",
+  	autor: "Adam Silvera",
+  	editura:"Storia Books",
+	gen_literar:"Drama",
+  	isbn:"978-606-9072-26-4",
+  	pret:20.5,
+  	an_aparitie: 2021
+  }, 
+  {
+     	_id:8,
+  	nume: "Ne-au tinut in viata. Radio Europa Libera. 1970-1990",
+  	autor: "Liviu Tofan",
+  	editura:"Omnium",
+	gen_literar:"Istorie",
+  	isbn:"978-606-95197-5-2",
+  	pret:20,
+  	an_aparitie: 2021
+  },
+  {
+     	_id:9,
+  	nume: "Johnny si-a luat pusca",
+  	autor: "Dalton Trumbo",
+  	editura:"Omnium",
+	gen_literar:"Istorie",
+  	isbn:"978-606-95197-4-5",
+  	pret:27.45,
+  	an_aparitie: 2021
+  },
+  {
+     	_id:10,
+  	nume: "Pacienta tacuta",
+  	autor: "Alex Michaelides",
+  	editura:"Litera",
+	gen_literar:"Fictiune",
+  	isbn:"9786063336065",
+  	pret:24.95,
+  	an_aparitie: 2019
+  }, 
+  {
+     	_id:11,
+  	nume: "Camerista",
+  	autor: "Nita Prose",
+  	editura:"Litera",
+	gen_literar:"Mister",
+  	isbn:"978-606-33-8338-0",
+  	pret:29.95,
+  	an_aparitie: 2022
+  }, 
+  {
+     	_id:12,
+  	nume: "Fecioarele",
+  	autor: "Alex Michaelides",
+  	editura:"Litera",
+	gen_literar:"Fictiune",
+  	isbn:"978-606-33-7541-5",
+  	pret:24.95,
+  	an_aparitie: 2021
+  }, 
+  {
+     	_id:13,
+  	nume: "Gheata de sub picioarele ei",
+  	autor: "Camilla Grebe",
+  	editura:"Trei",
+	gen_literar:"Mister",
+  	isbn:"9786064000903",
+  	pret:22.5,
+  	an_aparitie: 2017
+  }, 
+  {
+     	_id:14,
+  	nume: "Trecutul e tot ce mi-ai lasat",
+  	autor: "Adam Silvera",
+  	editura:"YoungArt",
+	gen_literar:"Fictiune",
+  	isbn:"9786069674284",
+  	pret:38,
+  	an_aparitie: 2021
+  },
+  {
+     	_id:15,
+  	nume: "Abc-ul psihopatului de succes",
+  	autor: "Kevin Dutton",
+  	editura:"Globo",
+	gen_literar:"Dezvoltare personala",
+  	isbn:"978-606-93858-1-4",
+  	pret:23.95,
+  	an_aparitie: 2015
+  }, 
+  {
+     	_id:16,
+  	nume: "Intelepciunea psihopatilor",
+  	autor: "Kevin Dutton",
+  	editura:"Globo",
+	gen_literar:"Dezvoltare personala",
+  	isbn:"978-606-93323-1-3",
+  	pret:22.45,
+  	an_aparitie: 2013
+  }  
+]);
+
+//insertBulk
+
+db.carti.bulkWrite([
+ {
+	insertOne: 
+		{ 
+		 _id:17,
+  		 nume: "Baiatul cu pijamale in dungi",
+  		 autor: "John Boyne",
+  		 editura:"RAO",
+		 gen_literar:"Fictiune",
+  		 isbn:"978-606-776-184-9",
+  		 pret:15,
+  		 an_aparitie: 2016
+		}
+ },
+ {
+	insertOne: 
+		{ 
+		 _id:18,
+  		 nume: "Rosu, alb si sange albastru",
+  		 autor: "Casey Mcquiston",
+  		 editura:"Corint",
+		 gen_literar:"Mister",
+  		 isbn:"9786067937688",
+  		 pret:27.45,
+  		 an_aparitie: 2020
+		}
+ },
+ {
+	insertOne:
+		 { 
+		  _id:19,
+  		  nume: "Sfarsitul soaptelor. Decembrie 1989",
+  		  autor: "Ruta Sepetys",
+  		  editura:"Epica",
+		  gen_literar:"Istorie",
+  		  isbn:"978-606-9713-10-5",
+  		  pret:19.95,
+  		  an_aparitie: 2022
+ 		 }
+ },
+ {
+	insertOne: 
+		{ 
+		 _id:20,
+  		 nume: "O scurta istorie ilustrata a romanilor",
+  		 autor: "Neagu Djuvara",
+  		 editura:"Humanitas",
+		 gen_literar:"Istorie",
+  		 isbn:"978-973-50-6372-6",
+  		 pret:59,
+  		 an_aparitie: 2019
+		}
+}
+]);
+
+
+
+
+

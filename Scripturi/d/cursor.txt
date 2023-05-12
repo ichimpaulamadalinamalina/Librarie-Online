@@ -1,0 +1,116 @@
+Colectia comenzi + carte
+//update pretul comenzii
+var cursor = db.comenzi.find();
+while (cursor.hasNext()) {
+  var comanda = cursor.next();
+  var pret_comanda = 0;
+  comanda.carti.forEach((element) => {
+    var cursorCarte = db.carti.find({ _id: element.id_carte });
+    if (cursorCarte.hasNext()) {
+      var carte = cursorCarte.next();
+      pret_comanda += carte.pret * element.cantitate;
+    }
+  });
+db.comenzi.updateOne({ _id: comanda._id }, { $set: { pret_comanda: pret_comanda } });
+}
+
+//calculare total pe zile si afisare produse
+var cursorComenzi = db.comenzi.find();
+var produseMap = new Map();
+while (cursorComenzi.hasNext()) {
+  var comanda = cursorComenzi.next();
+  var currentDate = comanda.data.toLocaleDateString("en-US");
+
+  comanda.carti.forEach((element) => {
+    var cursorProduse = db.carti.find({ _id: element.id_carte });
+    if (cursorProduse.hasNext()) {
+      var produs = cursorProduse.next();
+
+      if (produseMap[currentDate] == undefined) {
+        produseMap[currentDate] = {
+          total: 0,
+          carti: [],
+        };
+      }
+
+      produseMap[currentDate].total =
+        produseMap[currentDate].total + element.cantitate * produs.pret;
+
+      if (!produseMap[currentDate].carti.includes(produs.nume)) {
+        produseMap[currentDate].carti.push(produs.nume);
+      }
+    }
+  });
+}
+
+for (let key of Object.keys(produseMap)) {
+  if (key != "_data") {
+    print(key);
+    produseMap[key].carti.forEach((element) => print(element));
+    print("Total: " + produseMap[key].total + " lei");
+    print("\n\n");
+  }
+}
+
+//afisare nume carti din comanda 
+var cursorComenzi = db.comenzi.find();
+ while (cursorComenzi.hasNext()) {
+  str="";
+  var comanda = cursorComenzi.next();
+  str="Comanda cu id-ul  "+ comanda._id + " are urmatoarele carti: ";
+  comanda.carti.forEach((element) => {
+    var cursorProduse = db.carti.find({ _id: element.id_carte });
+    if (cursorProduse.hasNext()) {
+      var produs = cursorProduse.next();
+      str=str+ produs.nume + ", ";
+      }
+  })
+  print(str);
+};
+
+
+//afisare a totalului cheltuit de client pe comenzi
+ var cursor = db.clienti.find();
+  while (cursor.hasNext()) {
+  var client = cursor.next()
+  sum=0;
+
+  client.comenzi.forEach((element) => {
+
+    var cursorcomenzi = db.comenzi.find({ _id: element});
+    if (cursorcomenzi.hasNext()) {
+      var comanda =cursorcomenzi.next();
+     
+       sum=sum+comanda.pret_comanda;
+
+  }})
+ print("Clientul "+client.nume+ " a cheltuit " + sum + "lei " );
+};
+
+//afisarea cartilor cumparate de clienti
+
+var cursor = db.clienti.find();
+  while (cursor.hasNext()) {
+ str="";
+  var client = cursor.next()
+  str="Clientul "+client.nume+ " are cartile";
+  client.comenzi.forEach((element) => {
+  var cursorcomenzi = db.comenzi.find({ _id: element});
+   if (cursorcomenzi.hasNext()) {
+      var comanda =cursorcomenzi.next();
+      comanda.carti.forEach((element1) => {
+      var cursorProduse = db.carti.find({ _id: element1.id_carte });
+      if (cursorProduse.hasNext()) {
+      var produs = cursorProduse.next();
+      str=str+ ", "+ produs.nume ;
+  }})}})
+  print(str)};
+
+
+
+
+
+
+
+
+

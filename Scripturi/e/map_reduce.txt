@@ -1,0 +1,64 @@
+Colectia carti
+// grupare carti pe gen_literar  + numar carti 
+db.carti.mapReduce(
+  function () {
+    var vect = [];
+    vect.push(this.nume);
+
+    emit(this.gen_literar, {
+      nume: vect,
+      total: 1,
+    });
+  },
+  function (key, values) {
+    const vect = [];
+
+    values.forEach((value) =>
+      value.nume.forEach((produsName) => vect.push(produsName))
+    );
+
+    return {
+      total: values.reduce((a, b) => a + b.total, 0),
+      nume: vect,
+    };
+  },
+  {
+    out: "result",
+  }
+);
+
+//cea mai scumpa carte 
+var mapFunc = function()
+ { emit(this.nume, this.pret) }; 
+ var reduceFunc = function(key, values) 
+ {return Math.max.apply(Math, values); } 
+ db.carti.mapReduce(mapFunc, reduceFunc, {out: 'maxpret'});
+
+Colectia comenzi + carti
+
+//Pentru fiecare produs se calculeaza numarul de aparitii, cantitatea totala si cantitatea medie pentru comenzile date dupa data de „20.03.2022”, inclusiv.
+var mapFunc2 = function () { for (var idx = 0; idx < this.carti.length; idx++)
+ { var key = this.carti[idx].id_carte;
+ var value = { count: 1, cantitate: this.carti[idx].cantitate }; emit(key, value); } }
+ var reduceFunc2 = function (keySKU, countObjVals) { reducedVal = { count: 0, cantitate: 0 };
+ for (var idx = 0; idx < countObjVals.length; idx++) 
+ { 
+ reducedVal.count += countObjVals[idx].count; 
+ reducedVal.cantitate  +=countObjVals[idx].cantitate; }
+ return reducedVal;
+ }  
+ var finalizeFunc2 = function (key, reducedVal) 
+ { 
+ reducedVal.avg = reducedVal.cantitate/reducedVal.count;
+ return reducedVal; 
+ }
+ db.comenzi.mapReduce( mapFunc2, reduceFunc2, { finalize: finalizeFunc2, out: {merge: "comenzi_data"}, query: { data: { $gte: new Date("2022-03-20") } }} );
+
+Colectia comenzi
+//cea mai ieftina comanda livrata si in curs de livrare
+ var mapFunc = function()
+ { emit(this.comanda_livrata,this.pret_comanda) }; 
+ var reduceFunc = function(key, values) 
+ { return Math.min.apply(Math, values); } 
+ db.comenzi.mapReduce(mapFunc, reduceFunc, {out: 'mincomanda'});
+

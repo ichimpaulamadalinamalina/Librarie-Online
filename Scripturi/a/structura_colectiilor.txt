@@ -1,0 +1,42 @@
+Carti:
+ {
+  "id":integer,
+  "titlu":string,
+  "autor":string,
+  "editura":string,
+  "gen_literar":string,
+  "isbn":string,
+  "Pret":double,
+  "an_aparitie":integer
+ }
+
+Comenzi:
+ {
+  "_id":string,
+  "carti":   
+	   [{
+	     "id_carte":integer,
+             "cantitate":integer
+	    }],
+ "pret_comanda":double,
+ "data":date,
+ "cod_awb":regex, 
+ "comanda_livrata":boolean
+ }
+
+Clienti:
+ {
+  "_id":ObjectId,
+  "nume":string,
+  "telefon":string,
+  "email":string
+  "adresa":	
+          {
+	   "localitate":string,
+	   "judet":string,
+	   "strada":string,
+	   "nr":number
+	 }
+  "comenzi":[string]
+ }
+

@@ -1,0 +1,190 @@
+//insertOne
+var reg1=new RegExp("Ro11");
+db.comenzi.insertOne({
+  _id:'C01',
+  carti: [
+    {
+      id_carte: 1,
+      cantitate: 2,
+    },
+    {
+      id_carte: 2,
+      cantitate: 1,
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-04-29T16:30"),
+  cod_livrare:reg1,
+  comanda_livrata:false,
+});
+
+var reg2=new RegExp("Ro12");
+db.comenzi.insertOne({
+  _id:'C02',
+  carti: [
+    {
+      id_carte: 2,
+      cantitate: 2,
+    },
+    {
+      id_carte: 3,
+      cantitate: 1,
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-04-20T12:10"),
+  cod_livrare:reg2,
+  comanda_livrata:true,
+});
+
+//insertMany
+db.comenzi.insertMany([
+  {
+  _id:'C03',
+  carti: [
+    {
+      id_carte: 7,
+      cantitate: 1,
+    },
+    {
+      id_carte: 9,
+      cantitate: 2,
+    },  {
+      id_carte: 15,
+      cantitate: 4,
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-03-28T13:13"),
+  cod_livrare:RegExp("Ro13"),
+  comanda_livrata:true
+  },
+  {
+  _id:'C04',
+  carti: [
+    {
+      id_carte: 6,
+      cantitate: 5,
+    },
+    {
+      id_carte: 14,
+      cantitate: 1,
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-05-08T12:10"),
+  cod_livrare:RegExp("Ro14"),
+  comanda_livrata:false
+  },
+  {
+  _id:'C05',
+  carti: [
+    {
+      id_carte: 7,
+      cantitate: 2
+    },
+    {
+      id_carte: 12,
+      cantitate: 1
+    },  {
+      id_carte: 13,
+      cantitate: 2
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-04-08T13:50"),
+  cod_livrare:RegExp("Ro15"),
+  comanda_livrata:true
+  },
+  {
+  _id:'C06',
+  carti: [
+    {
+      id_carte: 15,
+      cantitate: 1
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-03-19T11:20"),
+  cod_livrare:RegExp("Ro16"),
+  comanda_livrata:true
+}]);
+
+//insertBulk
+db.comenzi.bulkWrite([
+{
+ insertOne: 
+ {
+  _id:'C07',
+  carti: [
+    {
+      id_carte: 12,
+      cantitate: 5
+    },
+    {
+      id_carte: 13,
+      cantitate: 1
+    },  {
+      id_carte: 17,
+      cantitate: 2
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-05-07T13:55"),
+  cod_livrare:RegExp("Ro17"),
+  comanda_livrata:false
+  }
+},
+{
+ insertOne: 
+ {
+  _id:'C08',
+  carti: [
+    {
+      id_carte: 1,
+      cantitate: 3
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-04-15T08:30"),
+  cod_livrare:RegExp("Ro18"),
+  comanda_livrata:true
+ }
+},
+{
+ insertOne: 
+ {
+  _id:'C09',
+  carti: [
+    {
+      id_carte: 11,
+      cantitate: 3
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-04-10T08:30"),
+  cod_livrare:RegExp("Ro19"),
+  comanda_livrata:true
+ }
+},
+{
+ insertOne: 
+ {
+  _id:'C10',
+  carti: [
+    {
+      id_carte: 11,
+      cantitate: 3
+    },    {
+      id_carte: 13,
+      cantitate: 2
+    }
+  ],
+  pret_comanda: null,
+  data: ISODate("2022-05-08T08:30"),
+  cod_livrare:RegExp("Ro20"),
+  comanda_livrata:false
+ }
+}
+]);
+

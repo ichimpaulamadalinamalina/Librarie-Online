@@ -1,0 +1,81 @@
+//carti 
+db.carti.updateOne(
+  {
+	nume:"Rosu, alb si sange albastru"	
+  },
+  {
+	$set:{gen_literar:"Fictiune"}
+  }
+);
+
+
+db.carti.updateOne(
+  {
+	isbn:"978-606-33-3835-9"	
+  },
+  {
+	$set:{editura:"RAO"}
+  }
+)
+
+db.carti.updateMany(
+  {
+ 	"pret": { $lt: 20 },
+  },
+  {
+	$set:{20}
+  }
+);
+
+
+//comenzi
+db.comenzi.updateOne(
+  {
+    	data: { $eq: ISODate("2022-04-29T16:30:00.000+00:00") },
+  },
+  {
+    	$set: { "carti.1.cantitate": 3 },
+  }
+);
+
+db.comenzi.updateMany(
+  {
+    	data: { $lt: ISODate("2022-04-20T16:30:00.000+00:00") },
+  },
+  {
+    	$set: { "comanda_livrata":true},
+  }
+);
+
+
+
+//clienti
+
+// update numarul de telefon client
+db.clienti.updateOne(
+  {
+	$and: [{ nume: "Ichim Malina" }, {email:"malinaichim@gmail.com" }]
+  },
+  {
+	$set:{telefon:"0756659536"}
+  }
+);
+
+/// update adresa
+db.clienti.updateOne(
+  {
+	_id:ObjectId("627b757bd2949c8cea313061")	
+  },
+  {
+	$set:
+	    {
+		adresa:
+			{
+			  localitate:"Constanta",
+			  judet:"Constanta",
+           		  strada:"Aurel Vlaicu",
+           		  nr:8
+			}
+	     }
+   }
+);

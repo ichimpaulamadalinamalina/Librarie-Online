@@ -1,0 +1,88 @@
+// carti 
+db.carti.bulkWrite(
+  [
+   {
+     insertOne: 
+	      {
+
+ 		 _id:21,
+  		nume: "Flux. Psihologia fericirii",
+  		autor: "Mihaly Csikszentmihaly",
+ 		editura:"Publica",
+ 		gen_literar:"Dezvoltare personala",
+ 		isbn:"978-606-722-063-6",
+ 		pret:23.6,
+  		an_aparitie: 2015
+	      }
+   },
+   {
+     insertOne: 
+              {  
+
+  		_id:22,
+		nume: "Rana de abandon",
+ 		autor: "Jean-Charles Bouchoux",
+  		editura:"Philobia",
+ 	 	gen_literar:"Dezvoltare personala",
+  		isbn:"978-606-9707-04-3",
+  		pret:17,
+  		an_aparitie: 2020
+	      }
+    },
+    {
+      updateMany: 
+		{
+       		 filter: { gen_literar: { $regex: /personala/ } },
+        	 update: { $inc: { "pret":5} },
+                }
+    },
+    { 
+      deleteMany: { filter: { "pret": 17 } }
+    }
+ ],
+  {
+    ordered: true,
+  }
+);
+
+
+//comenzi
+
+db.comenzi.bulkWrite(
+  [
+   {
+    insertOne: 
+	     {
+	      _id:'C11',
+ 	      carti: [
+    			{
+      			 id_carte: 1,
+      			 cantitate: 4
+    			},    
+                        {
+     			  id_carte: 9,
+     			  cantitate: 2
+    	                }
+  		     ],
+               pret_comanda: null,
+               data: ISODate("2021-05-05T08:30"),
+               cod_livrare:RegExp("Ro21"),
+               comanda_livrata:true,
+               }
+     },
+     {
+      updateMany: 
+		{
+        	filter: {cod_livrare:{ $regex: /Ro1/ } }, 
+        	update: { $set: { cod_livrare:RegExp("Ro31")} },
+      		}
+      },
+      { 
+       deleteMany: { filter:{"data":ISODate("2021-05-05T08:30")} } 
+      },
+    ],
+    {
+     ordered: true,
+    }
+);
+

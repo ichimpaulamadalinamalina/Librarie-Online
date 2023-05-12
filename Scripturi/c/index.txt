@@ -1,0 +1,37 @@
+Colectia carti
+
+//creare index carti dupa nume si autor 
+db.carti.createIndex( { nume: "text",autor: "text" } )
+db.carti.getIndexes() 
+db.carti.explain().find( { $text: { $search: "Kevin John" } })
+//cautarea numelui unei carti
+db.carti.find( { $text: { $search: "\"Arta manipularii\"" } } )
+//cautare Collean si Stefanie dar nu si John 
+db.carti.find( { $text: { $search: "Colleen Stefanie -John" } } )
+//Cautare autori cu numele ce sa contine Ke sau Jo
+db.carti.find({ autor: { $in: [ /^Ke/i, /^Jo/i ] } });
+//carti care sa nu contina cuvantul "arta" in titlu
+db.carti.find({nume: { $not: {$regex: /^Arta/i}} });
+
+
+//creare index dupa gen literar
+db.carti.createIndex( { "gen_literar": "text"});
+db.carti.getIndexes();
+db.cartii.find({gen_literar: "Istorie" }).explain("executionStats");
+
+Colectia comenzi
+//creare index dupa cantitate
+db.comenzi.createIndex(
+  { "carti.cantitate": 1 },
+  { name: "carti_cantitate" }
+);
+db.comenzi.getIndexes();
+db.comenzi.find({"carti.cantitate": 3 });
+
+Colectia clienti
+//creare index dupa nume, email si telefon
+db.clienti.createIndex( { nume: "text",email: "text",telefon:"text" } )
+db.clienti.getIndexes() 
+//cautare clienti dupa numele Malina
+db.clienti.find( { $text: { $search: "Malina" } } ) 
+

@@ -1,0 +1,102 @@
+Colectia CARTI 
+// sortare carti dupa pret  descrescator
+db.carti
+  .find({}, { _id: 0, nume: 1, pret: 1 })
+  .sort({ "pret": -1 });
+
+//sortare carti dupa pret crescator
+db.carti
+  .find({}, { _id: 0, nume: 1, pret: 1 })
+  .sort({ "pret": 1 });
+
+//sortare cele mai noi 5 carti
+db.carti
+  .find({}, { _id: 0, nume: 1, "an_aparitie": 1 })
+  .sort({ "an_aparitie": -1 })
+  .limit(5);
+
+//afisare carti dintr-un gen literar
+db.carti.find({ gen_literar:"Dezvoltare personala",}, { nume: 1,autor: 1 });
+
+//paginare carti 
+var page_number = 0;
+var products_per_page = 10;
+db.carti
+  .find({}, { _id: 0, nume: 1, autor:1, gen_literar: 1 })
+  .sort({ nume: 1 })
+  .skip(page_number * products_per_page)
+  .limit(products_per_page);
+
+Colectia comenzi
+//comenzile ce conțin 2 carti ( distincte)
+db.comenzi
+  .find({ carti: { $size: 2 } }, { carti: 1 })
+
+//afisare comenzi livrate 
+db.comenzi.find({comanda_livrata: true}, { data: 1 });
+
+//afisare cele mai noi 5 comenzi 
+db.comenzi
+  .find({}, { “data”: 1, “comanda_livrata”: 1 })
+  .sort({ "data": -1 })
+  .limit(5);
+
+//afisare cele mai scumpe 3 comenzi 
+db.comenzi
+  .find({}, { “data”: 1, “pret_comanda”: 1 })
+  .sort({ "pret_comanda": -1 })
+  .limit(3);
+
+//afisare comenzi cu codul de livrare continand Ro2
+db.comenzi.find(
+  {
+    "cod_livrare": {
+      $regex: /Ro2/i,
+    },
+  },
+  { cod_livrare: 1, comanda_livrata:1 }
+);
+
+// afisare comenzi peste 50 lei sau livrate cu peste 3 carti distincte
+//db.comenzi.find({"pret_comanda": {$gt:50}, $or: [ carti: { $size: 3 },{comanda_livrata: true}]}).pretty() 
+
+//comenzi ce contine cartea cu id-ul 1
+db.comenzi.find( { "carti.id_carte": 1 } )
+
+//comenzi intre 50 si 80 lei
+db.comenzi.find( {pret_comanda: { $elemMatch: { $gt: 50, $lt: 80 } } } ) 
+
+//afisare ultimul produs din comanzile livrate
+db.comenzi.find( {"comanda_livrata": true}, {  data: 1, carti: { $slice: -1 } } )
+
+Colectia clienti
+// afisarea clienților care au mai mult de 2 comenzi
+db.clienti.find({comenzi: { $size: 2 } }, { _id: 0,nume: 1});
+
+//afisare clienti din judetul Neamt
+db.clienti.find({adresa.judet: “Neamt”} , { _id: 0,nume: 1});
+
+//afisare clienti a caror numar de telefon contine '075'
+db.clienti.find({“telefon”:/075/,} , { _id: 0,nume: 1});
+
+//afisare clienti din Iasi sau Bacau
+db.clienti.find( { “adresa.judet“: { $in: [ "Iasi", "Bacau" ] } } )
+
+//client iasi cu numele incepand cu i si emailul cu m
+db.clienti.find( {
+"adresa.judet": "Iasi",
+$or: [ { "email": /^m/ }, { "nume": /^I/ } ]
+} );
+
+//afisare primilor 4 clienti  incepand cu al treilea din baza de date
+//db.clienti.find({}, {"nume":1}).limit(4).skip(2) 
+
+
+
+
+
+
+
+
+
+

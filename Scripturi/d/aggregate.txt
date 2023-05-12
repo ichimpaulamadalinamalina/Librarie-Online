@@ -1,0 +1,91 @@
+Colectia carti
+//grupare dupa gen_literar
+db.carti.aggregate([
+  {
+    $group: {
+      _id: "$gen_literar",
+      detalii: {
+        $push: "$$ROOT"
+      },
+      totalcarti: { $sum: 1 },
+    },
+  },
+  {
+    $sort: {
+      totalcarti: -1
+    },
+  },
+  {
+    $limit: 5
+  },
+]);
+
+//pretul maxim si cel mediu pe edituri
+db.carti.aggregate([
+    {$group:{
+        _id:"$editura",
+        sumpret:{$sum:"$pret"},
+        avgpret:{$avg:"$pret"}
+        }}
+])
+
+Colectia comenzi
+//primele 3 comenzi cu cantitatea cea mai mare
+db.comenzi.aggregate([
+  { $unwind: "$carti" },
+  {
+    $group: {
+      _id: "$data",
+      detalii: {
+        $push: "$$ROOT",
+      },
+      total: { $sum: "$carti.cantitate" },
+    },
+  },
+  {
+    $sort: {
+      total: -1,
+    },
+  },
+  {
+    $limit: 3,
+  },
+]);
+
+
+//incasari pe comenzi livrate sau in tranzit
+db.comenzi.aggregate([ 
+ { $group : { _id : "$comanda_livrata", comenzi: { $push: "$$ROOT" } } }, 
+ { $addFields: { totalincasari : { $sum: "$comenzi.pret_comanda" } } } ])
+
+//pentru fiecare produs se calculeaza numarul de aparitii, cantitatea totala si cantitatea medie pentru comenzile date dupa data de "20.03.2022", inclusiv.
+db.comenzi.aggregate([
+    {$match : { "data": { $gte: new ISODate("2022-03-20")} }},
+    { $unwind : "$carti" },
+    {
+        $group:{
+            _id:"$carti.id_carte",
+            count : { $sum : 1 },
+            cantTot: {$sum: "$carti.cantitate"},
+            average: { $avg: "$carti.cantitate" },
+            }
+   }
+]);
+
+Colectia clienti 
+//grupare clienti dupa judet
+db.clienti.aggregate([ { $group : { _id : "$adresa.judet", clienti: { $push: "$nume" } } } ])
+
+//ordonare clienti crescator dupa nume, dupa ce numele este scris cu majuscule
+db.clienti.aggregate( [ { $project : { nume:{$toUpper:"$nume"} , _id:0 } }, { $sort : { nume : 1 } } ])
+
+
+
+
+
+
+
+
+
+
+

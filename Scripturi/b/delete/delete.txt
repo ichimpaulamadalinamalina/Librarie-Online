@@ -1,0 +1,29 @@
+//carti
+db.carti.deleteMany({
+  editura:"RAO",
+});
+
+
+db.carti.deleteMany({
+  autor: "Adam Silvera"
+});
+
+//comenzi
+db.comenzi.deleteMany({
+  $and: [
+    { data: { $gte: new Date(2022, 3, 3) } },
+    { data: { $lt: new Date(2022, 3, 20) } },
+  ],
+});
+
+
+
+//clienti
+db.clienti.deleteOne({
+  $and: [{ nume: "Ichim Malina" }, {telefon: "0788866554" }],
+});
+
+db.clienti.deleteMany({
+ "adresa.judet": "Neamt",
+});
+

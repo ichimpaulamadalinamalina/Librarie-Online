@@ -1,0 +1,71 @@
+//insertOne
+db.clienti.insertOne({
+  nume:"Vlase Vlad",
+  telefon:"0756675854",
+  email:"vladvlase@gmail.com",
+  adresa:
+	{
+	localitate:"Suceava",
+	judet:"Suceava",
+        strada:"Independentei",
+        nr:18
+	},
+  comenzi:['C03','C09']
+});
+
+//insertMany
+db.clienti.insertMany([
+{
+  nume:"Ichim Malina",
+  telefon:"0788866554",
+  email:"malinaichim@gmail.com",
+  adresa:
+	{
+	localitate:"Iasi",
+	judet:"Iasi",
+        strada:"Tudor Vladimirescu",
+        nr:10
+	},
+  comenzi:['C01','C05','C08']
+},
+{
+  nume:"Manea Ana",
+  telefon:"0787353954",
+  email:"anamanea@gmail.com",
+  adresa:
+	{
+	localitate:"Bacau",
+	judet:"Bacau",
+        strada:"Mihai Eminescu",
+        nr:11
+	},
+  comenzi:['C02','C07']
+},
+{
+  nume:"Marcu Eduard",
+  telefon:"0759865454",
+  email:"eduardmarcu@gmail.com",
+  adresa:
+	{
+	localitate:"Roman",
+	judet:"Neamt",
+        strada:"Primaverii",
+        nr:7
+	},
+  comenzi:['C04','C06']
+},
+{
+  nume:"Fodor Ana",
+  telefon:"0765483544",
+  email:"anafodor@gmail.com",
+  adresa:
+	{
+	localitate:"Piatra-Neamt",
+	judet:"Neamt",
+        strada:"Soarelui",
+        nr:2
+	},
+  comenzi:['C10','C11']
+}
+]);
+
